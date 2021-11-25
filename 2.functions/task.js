@@ -11,7 +11,8 @@ function getArrayParams(arr) {
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] < min) {
       min = arr[i];
-    } else if (arr[i] > max) {
+    }
+    if (arr[i] > max) {
       max = arr[i];
     }
     sum = sum + arr[i];
@@ -33,13 +34,14 @@ function worker(arr) {
 }
 
 function makeWork(arrOfArr, func) {
-  let max = -Infinity;
+  let max;
 
   // Ваш код
   // for ...
   for (i = 0; i < arrOfArr.length; i++) {
-    if (max > worker(arrOfArr[i])) {
-      max =  worker(arrOfArr[i])
+    let resOfSol = func(arrOfArr[i]);
+    if (max > resOfSol) {
+      max =  resOfSol;
     }
   }
 
@@ -54,10 +56,10 @@ function worker2(arr) {
   for (let i = 0; i < arr.length; i++) {
     if (arr[i] < min) {
       min = arr[i];    
-    } else if (arr[i] > max) {
+    }
+    if (arr[i] > max) {
       max = arr[i];
     }
   }
-  let result = Math.abs(max - min);
-  return result; 
+  return Math.abs(max - min);
 }
