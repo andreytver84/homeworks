@@ -102,13 +102,14 @@ class Student {
     }
     getAverageBySubject(subjectName) {
         let findSubject = this.subjects.find(item => item === subjectName);
-        const sum = findSubject.marks.reduce((acc, mark) => acc + mark, 0);
-        const length = findSubject.marks.length;
+        let sum = findSubject.marks.reduce((acc, mark) => acc + mark, 0);
+        let length = findSubject.marks.length;
         return sum / length;
     }
     getAverage() {
-        const sum = this.subjects.forEach(item.marks.reduce((acc, mark) => acc + mark, 0));
-        const length = this.subjects.length;
+        let sumMarks = this.subjects.map(item => (item.marks.reduce((acc, mark) => acc + mark, 0))); 
+        let sum = sumMarks.reduce((acc, mark) => acc + mark, 0);
+        let length = findSubject.marks.length;
         return sum / length;
     }
 }
