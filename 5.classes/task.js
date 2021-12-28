@@ -76,8 +76,9 @@ class Library {
         return this.books.find(item => item.type === value);
     }
     giveBookByName(bookName) {
-        if (this.books.find(item => item.name === bookName)) {
-            this.books.splice(item,1);            
+        let findBook = this.books.find(item => item.name === bookName);
+        if (findBook) {
+            this.books.splice(findBook,1);            
         } else {
             return null;
         }
@@ -93,15 +94,15 @@ class Student {
     }
     addMark(mark,subjectName) {
         let toSubjects = {subject: subjectName, marks: [mark]};
-        if (this.subjects.find(item => item === subjectName)) {
-           let needSubject = (this.subjects.find(item => item === subjectName));
-           needSubject.marks.push(mark);
+        let needSubject = this.subjects.find(item => item.subject === subjectName);
+        if (needSubject) {
+            needSubject.marks.push(mark);
         } else {
             this.subjects.push(toSubjects);
         }
     }
     getAverageBySubject(subjectName) {
-        let findSubject = this.subjects.find(item => item === subjectName);
+        let findSubject = this.subjects.find(item => item.subject === subjectName);
         let sum = findSubject.marks.reduce((acc, mark) => acc + mark, 0);
         let length = findSubject.marks.length;
         return sum / length;
