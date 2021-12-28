@@ -109,7 +109,7 @@ class Student {
     getAverage() {
         let sumMarks = this.subjects.map(item => (item.marks.reduce((acc, mark) => acc + mark, 0))); 
         let sum = sumMarks.reduce((acc, mark) => acc + mark, 0);
-        let length = findSubject.marks.length;
+        let length = sumMarks.length;
         return sum / length;
     }
 }
