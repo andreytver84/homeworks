@@ -73,11 +73,17 @@ class Library {
         }
     }
     findBookBy(type, value) {
-        return this.books.find(item => item[type] === value);
+        let findBook = this.books.find(item => item[type] === value);
+        if (findBook == undefined) {
+            return null;
+        } else {
+            return findBook;
+        }
     }
     giveBookByName(bookName) {
         let findBook = this.books.find(item => item.name === bookName);
         if (findBook) {
+            return findBook;
             this.books.splice(findBook,1);            
         } else {
             return null;
@@ -90,27 +96,28 @@ class Student {
         this.name = name;
         this.gender = gender;
         this.age = age;
-        this.subjects=[];
+        this.marks=[];
     }
+    
     addMark(mark,subjectName) {
-        let toSubjects = {subject: subjectName, marks: [mark]};
-        let needSubject = this.subjects.find(item => item.subject === subjectName);
-        if (needSubject) {
-            needSubject.marks.push(mark);
-        } else {
-            this.subjects.push(toSubjects);
-        }
+       if (this.marks[subjectName]) {
+        this.marks[subjectName].push(mark);
+       } else {
+        this.marks[subjectName] = [mark];
+       }
     }
+    
     getAverageBySubject(subjectName) {
-        let findSubject = this.subjects.find(item => item.subject === subjectName);
-        let sum = findSubject.marks.reduce((acc, mark) => acc + mark, 0);
-        let length = findSubject.marks.length;
+        let sum = this.marks[subjectName].reduce((acc, mark) => acc + mark, 0);
+        let length = this.marks[subjectName].length;
         return sum / length;
     }
     getAverage() {
-        let sumMarks = this.subjects.map(item => (item.marks.reduce((acc, mark) => acc + mark, 0))); 
-        let sum = sumMarks.reduce((acc, mark) => acc + mark, 0);
-        let length = sumMarks.length;
-        return sum / length;
+        let sumMarks;
+        for (let key in this.marks) {
+            sumMarks += this.marks[key].reduce((acc, mark) => acc + mark, 0);
+        }        
+        let length =  this.marks.length;
+        return sumMarks / length;
     }
 }
