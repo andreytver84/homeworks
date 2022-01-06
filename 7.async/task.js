@@ -1,7 +1,7 @@
 class AlarmClock {
     constructor () {
         this.alarmCollection = [];
-        this.timerId;        
+        this.timerId = null;        
     }
     addClock(timeAl,callbackAl,idAl) {
         let findId = this.alarmCollection.find(item => item.id === idAl);
@@ -10,13 +10,12 @@ class AlarmClock {
         } else if (findId) {
             console.error('звонок существует');
             return;
-        } else {
-            this.alarmCollection.push({time: timeAl, calback: callbackAl, id: idAl })
-        }        
+        } 
+         this.alarmCollection.push({time: timeAl, callback: callbackAl, id: idAl });             
     }
     removeClock(idAl) {
         let indexAl = this.alarmCollection.findIndex(item => item.id === idAl);
-        if (indexAl !== undefined) {
+        if (indexAl !== -1) {
             this.alarmCollection.splice(indexAl,1);
             return true;
         } else {
@@ -36,10 +35,18 @@ class AlarmClock {
         return hh + ':' + mm;
     }
     start() {
-
+        if (!this.timerId) {
+            this.timerId = setInterval(function() {
+                let findAlarm = this.alarmCollection.find(item => item.time == getCurrentFormattedTime());
+                findAlarm.callback();
+            });            
+        }    
     }
     stop() {
-
+        if (this.timerId) {
+            clearInterval(this.timerId);
+            this.timerId = null;
+        }
     }
     printAlarms() {
         this.alarmCollection.forEach((item) => console.log('id звонка: ' + item.id + '; время звонка: ' + item.time));
