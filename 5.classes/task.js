@@ -100,11 +100,15 @@ class Student {
     }
 
     addMark(mark, subjectName) {
-        if (this.marks[subjectName]) {
-            this.marks[subjectName].push(mark);
+        if (mark < 1 || mark > 5) {
+            console.log('Ошибка, оценка должна быть числом от 1 до 5');            
         } else {
-            this.marks[subjectName] = [mark];
-        }
+            if (this.marks[subjectName]) {
+                this.marks[subjectName].push(mark);
+            } else {
+                this.marks[subjectName] = [mark];
+            }
+        }        
     }
 
     getAverageBySubject(subjectName) {
@@ -115,7 +119,8 @@ class Student {
     getAverage() {
         let sumMarks = 0;
         for (let key in this.marks) {
-            sumMarks = sumMarks + this.marks[key].reduce((acc, mark) => acc + mark, 0);
+            sumMarks = sumMarks + this.getAverageBySubject(key);
+            
         }
         let length = Object.keys(this.marks).length;
         return sumMarks / length;
